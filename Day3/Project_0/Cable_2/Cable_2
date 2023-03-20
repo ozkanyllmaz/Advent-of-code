@@ -1,0 +1,88 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#define max_len 150000
+
+
+int main()
+{
+
+    FILE *fp;
+    char str[250];
+    char letter;
+    int number;
+    int x=0,y=0;
+    int eksen_x[max_len],eksen_y[max_len];
+
+    fp = fopen("kablo2.txt", "r");
+    if (fp == NULL)
+    {
+        printf("Dosya Bulunamadi!!\n");
+        return 1;
+    }
+    int p=1;
+    int koordinat[21];
+
+    FILE *fp2;
+    fp2=fopen("sonuc2.txt","w");
+
+    if (fp2 == NULL)
+    {
+        printf("Dosya Bulunamadi!!\n");
+        return 1;
+    }
+
+    while (fgets(str, sizeof(str), fp) != NULL)
+    {
+        sscanf(str, "%c%d", &letter, &number);
+
+        if(letter=='U')
+        {
+            for(int i=1; i<=number; i++)
+            {
+                y++;
+                eksen_y[i]=y;
+                fprintf(fp2, "%d,%d,",x,eksen_y[i]);
+            }
+        }
+        else if(letter=='D')
+        {
+            for(int i=1; i<=number; i++)
+            {
+                y--;
+                eksen_y[i]=y;
+                fprintf(fp2, "%d,%d,",x,eksen_y[i]);
+            }
+        }
+        else if(letter=='R')
+        {
+            for(int i=1; i<=number; i++)
+            {
+                x++;
+                eksen_x[i]=x;
+                fprintf(fp2, "%d,%d,",eksen_x[i],y);
+            }
+        }
+        else if(letter=='L')
+        {
+            for(int i=1; i<=number; i++)
+            {
+                x--;
+                eksen_x[i]=x;
+                fprintf(fp2, "%d,%d,",eksen_x[i],y);
+            }
+        }
+        else
+        {
+            printf("NULL");
+        }
+    }
+    printf("Bilgiler basarili bir sekilde dosyaya kaydedildi.");
+
+    fclose(fp2);
+
+    fclose(fp);
+
+    return 0;
+}
